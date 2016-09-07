@@ -1,0 +1,27 @@
+
+	
+	<section id="form"><!--form-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-1">
+					<div class="login-form"><!--login form-->
+						<h2>Login to your account</h2>
+						<form name='login' role="form" novalidate ng-submit="$ctrl.login()">
+							<input type="email" ng-pattern="$ctrl.re" name="email" placeholder="Email Address" ng-model="$ctrl.email"/>
+								<span ng-if="login.email.$invalid && !login.email.$pristine">noValid Email</span>
+								<span ng-if="login.email.$invalid && login.email.$error.pattern && !login.email.$pristine">pattern</span>
+							<input type="password" name="password" placeholder="Password" ng-model="$ctrl.password"/>
+							<span>
+								<input type="checkbox" class="checkbox" ng-model="$ctrl.remember"> 
+								Remember me
+							</span>
+							<button type="submit" class="btn btn-default">Login</button>
+
+						</form>
+					</div><!--/login form-->
+				</div>
+				
+				
+			</div>
+		</div>
+	</section><!--/form-->
