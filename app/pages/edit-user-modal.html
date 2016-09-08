@@ -5,35 +5,40 @@
 <div class="modal-body">
     <div class="form-group">
         <label for="firstName">First Name:</label>
-        <input type="text" class="form-control" name="firstName" placeholder="first name" ng-model="userEdit.meta.firstname" ng-init="userEdit.meta.firstname = user.meta.firstname">
+        <input type="text" class="form-control" name="firstName" placeholder="first name"
+         ng-model="$ctrl.userEdit.meta.firstname" ng-init="$ctrl.userEdit.meta.firstname = user.meta.firstname">
     </div>
 
     <div class="form-group">
         <label for="lastName">Last Name:</label>
-        <input type="text" class="form-control" placeholder="last name" ng-model="userEdit.meta.lastname" ng-init="userEdit.meta.lastname = user.meta.lastname">
+        <input type="text" class="form-control" placeholder="last name" ng-model="$ctrl.userEdit.meta.lastname" ng-init="$ctrl.userEdit.meta.lastname = user.meta.lastname">
     </div>
 
     <div class="form-group">
         <label for="email">E-mail:</label>
-        <input type="text" class="form-control" placeholder="email" ng-model="userEdit.email" ng-init="userEdit.email = user.email">
+        <input type="text" class="form-control" placeholder="email" ng-model="$ctrl.userEdit.email" ng-init="$ctrl.userEdit.email = user.email">
+    </div>
+     <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="text" class="form-control" placeholder="email" ng-model="$ctrl.userEdit.phone" ng-init="$ctrl.userEdit.phone = user.phone">
     </div>
     <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" placeholder="Your password" ng-model="userEdit.password" ng-change="ready()">
+        <label for="password">Current password:</label>
+        <input type="password" class="form-control" placeholder="Your current password" ng-model="$ctrl.userEdit.password" ng-change="ready()">
     </div>
 
     <div class="form-group">
-        <input type="checkbox" id="changePass" ng-model="changePassword">
+        <input type="checkbox" id="changePass" ng-model="$ctrl.changePassword">
         <label for="changePass">change password</label>
     </div>
 
     <div ng-show="changePassword">
         <div class="form-group">
-            <input type="password" class="form-control" name="newPassword" placeholder="New password" ng-model="userEdit.newPassword">
+            <input type="password" class="form-control" name="newPassword" placeholder="New password" ng-model="$ctrl.userEdit.newPassword">
         </div>
 
         <div class="form-group">
-            <input type="password" class="form-control" name="replaceNewPassword" placeholder="Repeat password" ng-model="userEdit.repeatNewPassword">
+            <input type="password" class="form-control" name="replaceNewPassword" placeholder="Repeat password" ng-model="$ctrl.userEdit.repeatNewPassword">
         </div>
     </div>
 
@@ -43,13 +48,13 @@
 </div>
     
 <div class="modal-footer">
-    <button class="btn btn-success" ng-click="edit()" type="button" ng-disabled="!isValid() || working">
+    <button class="btn btn-success" ng-click="$ctrl.ok()" type="button" ><!--ng-disabled="!isValid() || working"-->
         <i ng-show="finish" class="fa fa-check"></i>
         <i class="fa fa-circle-o-notch fa-spin" ng-show="working && !finish"></i> 
         sav{{ !$ctrl.working ? 'e' : $ctrl.finish ? 'ed' : 'ing'}}
     </button>
        
-    <button class="btn btn-danger ng-binding" type="button" ng-click="cancelWindow()">
+    <button class="btn btn-danger ng-binding" type="button" ng-click="$ctrl.cancel()">
         <i class="fa fa-times" ng-class="params.cancel.icon"></i> cancel
     </button>
 </div>

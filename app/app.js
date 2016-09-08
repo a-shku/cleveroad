@@ -34,27 +34,10 @@ app.component('nHeader', {
 	templateUrl: "pages/partials/header.html",
 	controller: function($rootScope, $uibModal, $log){
 		console.log('header is working');
+		console.log('HROOT', $rootScope.ActiveUser);
 
 	var ctrl = this;
 
-		/*modal*/
-  //        ctrl.open = function (size) {
-	 //    	$uibModal.open({
-	 //      animation: true,
-	 //      ariaLabelledBy: 'modal-title',
-	 //      ariaDescribedBy: 'modal-body',
-	 //      templateUrl: 'pages/edit-user-modal.html',
-	 //      controller: 'ModalInstanceCtrl',
-	 //      controllerAs: '$ctrl',
-	 //      size: size,
-	 //      // resolve: {
-	 //      //   items: function () {
-	 //      //     return $ctrl.items;
-	 //      //   }
-	 //      // }
-	 //    });
-		// }
-	/*/modal*/
 	/*mod component*/
 	ctrl.openComponentModal = function () {
     var modalInstance = $uibModal.open({
@@ -62,13 +45,15 @@ app.component('nHeader', {
       component: 'modalComponent',
       resolve: {
         items: function () {
-          return ctrl.items;
+        	console.log('pass active', $rootScope.ActiveUser);
+          return $rootScope.ActiveUser;
         }
       }
     });
 
     modalInstance.result.then(function (selectedItem) {
       ctrl.selected = selectedItem;
+      console.log(ctrl.selected);
     }, function () {
       $log.info('modal-component dismissed at: ' + new Date());
     });
@@ -94,16 +79,12 @@ app.component('front', {
     },
 	 controller: function($rootScope, $uibModal){
         var ctrl = this;
-        console.log('in front now');
-        console.log($rootScope.ActiveUser);
-        ctrl.ActiveUser = $rootScope.ActiveUser;
-
-        ctrl.func = function(){
-        	alert(111)
-        }
-
+        if($rootScope.ActiveUser){
+        	console.log('in member now');
+        } else {console.log('in front now');}
         
-
+        console.log('activuser', $rootScope.ActiveUser);
+        ctrl.ActiveUser = $rootScope.ActiveUser;
 
     }
 });
@@ -135,15 +116,9 @@ app.component('login', {
         	 console.log($scope.login.email.$valid);
         };
 
-       
-
-
     }
 });
 
-app.controller('ModalInstanceCtrl', function($uibModalInstance){
-	console.log('modalWindow was opened');
-})
 
 app.component('modalComponent', {
   templateUrl: 'pages/edit-user-modal.html',
@@ -156,14 +131,15 @@ app.component('modalComponent', {
     var ctrl = this;
 
     ctrl.$onInit = function () {
-      ctrl.items = ctrl.resolve.items;
-      ctrl.selected = {
-        item: ctrl.items[0]
-      };
+      ctrl.currentUserInfo = ctrl.resolve.currentUserInfo
+      
+     
     };
 
     ctrl.ok = function () {
-      ctrl.close({$value: ctrl.selected.item});
+    	console.log(ctrl.userEdit);
+    	ctrl.close({$value: ctrl.userEdit});
+
     };
 
     ctrl.cancel = function () {
