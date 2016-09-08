@@ -1,6 +1,7 @@
-<header id="header"><!--header-->
+<header id="header" ><!--header-->
     <div class="header_top"><!--header_top-->
       <div class="container">
+      <div ng-click="$ctrl.func()">321</div>
         <div class="row">
           <div class="col-sm-6">
             <div class="contactinfo">
@@ -36,11 +37,14 @@
           </div>
           <div class="col-sm-8">
             <div class="shop-menu pull-right">
-              <ul class="nav navbar-nav">
-                <li><a href="account"><i class="fa fa-user"></i> Account</a></li>
-                <li><a href="wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
-               <li><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                <li><a ui-sref="login"><i class="fa fa-lock"></i> Login1</a></li>
+              <ul class="nav navbar-nav" >
+              
+                <li ng-click="$ctrl.openComponentModal()"><a><i class="fa fa-user"></i> {{ActiveUser.email}}</a></li>
+                <li ng-if="ActiveUser"><a href="wishlist"><i class="fa fa-star"></i> Wishlist </a></li>
+                <li ng-if="ActiveUser"><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                <li ng-if="ActiveUser"><a ui-sref="login"><i class="fa fa-lock"></i> Logout</a></li>
+                <li ng-if="!ActiveUser"><a ui-sref="login"><i class="fa fa-lock"></i> Login1</a></li>
+
               </ul>
             </div>
           </div>

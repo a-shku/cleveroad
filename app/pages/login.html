@@ -7,12 +7,13 @@
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
 						<form name='login' role="form" novalidate ng-submit="$ctrl.login()">
-							<input type="text"   ng-pattern="$ctrl.re" name="email" placeholder="Email Address" ng-model="$ctrl.email"/>
+							<input type="text" required  ng-pattern="$ctrl.emailReg" name="email" placeholder="Email Address" ng-model="$ctrl.email" ng-class="ng-invalid"/>
 							<!-- <pre>myForm.myName.$error = {{ login.email.$error | json }}</pre> -->
 								<div ng-messages="login.email.$error">
 								    <!-- <div ng-message="type">format</div> -->
-								     <div ng-message="pattern">Email format is incorrect</div>
 								    <div ng-message="required">Email is required</div>
+								    <div ng-message="pattern">Email format is incorrect</div>
+								    
 								</div>
 
 
@@ -20,12 +21,20 @@
 								<!-- <span ng-if="login.email.$invalid && !login.email.$pristine">noValid Email</span>
 								<span ng-if="login.email.$invalid && login.email.$error.pattern && !login.email.$pristine">pattern</span> -->
 								
-							<input type="password" name="password" placeholder="Password" ng-model="$ctrl.password"/>
+							<input type="password" required name="password" ng-minlength="6" ng-maxlength="16" ng-pattern="$ctrl.passReg" placeholder="Password" ng-model="$ctrl.password"/>
+
+							<div ng-messages="login.password.$error">
+								<div ng-message="required">Password is required</div>
+								<div ng-message="minlength">Password is too short</div>
+								<div ng-message="maxlength">Password is too long</div>
+								<div ng-message="pattern">Password format is incorrect</div>
+							</div>
+
 							<span>
 								<input type="checkbox" class="checkbox" ng-model="$ctrl.remember"> 
 								Remember me
 							</span>
-							<button type="submit" class="btn btn-default">Login</button>
+							<button type="submit" ng-disabled="login.$invalid && login.email.$invalid" class="btn btn-default">Login</button>
 
 						</form>
 					</div><!--/login form-->
