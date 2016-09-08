@@ -39,11 +39,11 @@
             <div class="shop-menu pull-right">
               <ul class="nav navbar-nav" >
               
-                <li ng-click="$ctrl.openComponentModal()"><a><i class="fa fa-user"></i> {{ActiveUser}}</a></li>
-                <li ng-if="ActiveUser"><a href="wishlist"><i class="fa fa-star"></i> Wishlist </a></li>
-                <li ng-if="ActiveUser"><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                <li ng-if="ActiveUser"><a ui-sref="login"><i class="fa fa-lock"></i> Logout</a></li>
-                <li ng-if="!ActiveUser"><a ui-sref="login"><i class="fa fa-lock"></i> Login1</a></li>
+                <li ng-if="$root.ActiveUser" ng-click="$ctrl.openComponentModal()"><a><i class="fa fa-user"></i> {{$root.ActiveUser.email}}</a></li>
+                <li ng-if="$root.ActiveUser"><a href="wishlist"><i class="fa fa-star"></i> Wishlist </a></li>
+                <li ng-if="$root.ActiveUser"><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                <li ng-if="$root.ActiveUser" ng-click="$ctrl.cookDel()"><a ui-sref="/"><i class="fa fa-lock"></i> Logout</a></li>
+                <li ng-if="!$root.ActiveUser"><a ui-sref="login"><i class="fa fa-lock"></i> Login1</a></li>
 
               </ul>
             </div>

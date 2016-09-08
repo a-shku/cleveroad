@@ -41,14 +41,14 @@ app.run(function($state, $window, $location, $rootScope) {
 
 app.component('nHeader', {
 	templateUrl: "pages/partials/header.html",
-	controller: function($rootScope, $uibModal, $log){
+	controller: function($rootScope, $scope, $state, $uibModal, $log, cookieDelFactory){
 		console.log('header is working');
 		console.log('HROOT', $rootScope.ActiveUser);
+		//$scope.ActiveUser = $rootScope.ActiveUser;
 
 	var ctrl = this;
-
+	//ctrl.ActiveUser = $rootScope.ActiveUser;
 	//get activeuser from cookies
-
 
 	/*mod component*/
 	ctrl.openComponentModal = function () {
@@ -72,6 +72,16 @@ app.component('nHeader', {
   };
   /*/mod component*/
 
+  //logout
+  ctrl.cookDel = function(){
+        	console.log(document.cookie);
+        	cookieDelFactory.cookieDel();
+        	$rootScope.ActiveUser = false;
+        	$state.go('/');
+        }	
+    // /logout
+
+
 	}
 });
 
@@ -89,7 +99,7 @@ app.component('front', {
         memberView: "@",
         //adminView: "@"
     },
-	 controller: function($rootScope, $uibModal, cookieDelFactory){
+	 controller: function($rootScope, $state, $location, $uibModal, cookieDelFactory){
         var ctrl = this;
         if($rootScope.ActiveUser){
         	console.log('in member now', $rootScope.ActiveUser);
@@ -97,10 +107,7 @@ app.component('front', {
         
         console.log('activuser', $rootScope.ActiveUser);
         ctrl.ActiveUser = $rootScope.ActiveUser;
-        ctrl.cookDel = function(){
-        	console.log(document.cookie);
-        	cookieDelFactory.cookieDel();
-        }	
+        
 
     }
 });
@@ -121,17 +128,23 @@ app.component('login', {
         	// 	else{alert('noVal');}
         	//if(response from server is 'OK'){$location.url('/member');}
         	console.log('all form', $scope.login.$valid);
+        	
+        	ctrl.isValid = function(){
+        		if($scope.login.$valid) return true;
+        	};
+
         	if($scope.login.$valid ){
         		$rootScope.ActiveUser = {
         			email: ctrl.email,
         			password: ctrl.password
         		}
+        		console.log('create root', $rootScope.ActiveUser);
         		console.log(ctrl.email);
         		//document.cookie = "email="+ctrl.email; +" password="+ctrl.password;
         			
-document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + (new Date(Date.now() + 7 * 86400000).toGMTString());
-
-        		$location.url('/member')
+				document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + (new Date(Date.now() + 7 * 86400000).toGMTString());
+				
+        		$location.url('/member');
         	}
         	 console.log('error', $scope.login.$error);
         	 console.log($scope.login.email.$valid);
@@ -182,7 +195,7 @@ app.factory('cookieDelFactory', [function factory() {
 }]);
 
 /*
-при логине сохранять логин в куки
+при логине сохранять логин в куки, в имя куки подставлять email
 при выходе удалять куку
 !!!лучше хранить не в куке а в сессии, а если поставить галочку "запомнить", то тогда в куках
 

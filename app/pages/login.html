@@ -34,7 +34,7 @@
 								<input type="checkbox" class="checkbox" ng-model="$ctrl.remember"> 
 								Remember me
 							</span>
-							<button type="submit" ng-disabled="login.$invalid && login.email.$invalid" class="btn btn-default">Login</button>
+							<button type="submit" ng-disabled="$ctrl.isValid()" class="btn btn-default">Login</button>
 
 						</form>
 					</div><!--/login form-->
