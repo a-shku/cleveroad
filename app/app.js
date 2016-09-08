@@ -7,7 +7,6 @@ var app = angular.module('myApp', [
   'ui.bootstrap',
   'ngAnimate',
 
- 
 ]);
 
 app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -38,10 +37,13 @@ app.component('nHeader', {
 
 	var ctrl = this;
 
+	//get activeuser from cookies
+
+
 	/*mod component*/
 	ctrl.openComponentModal = function () {
     var modalInstance = $uibModal.open({
-      animation: ctrl.animationsEnabled,
+      animation: true,
       component: 'modalComponent',
       resolve: {
         items: function () {
@@ -77,7 +79,7 @@ app.component('front', {
         memberView: "@",
         //adminView: "@"
     },
-	 controller: function($rootScope, $uibModal){
+	 controller: function($rootScope, $uibModal, cookieDelFactory){
         var ctrl = this;
         if($rootScope.ActiveUser){
         	console.log('in member now');
@@ -85,6 +87,10 @@ app.component('front', {
         
         console.log('activuser', $rootScope.ActiveUser);
         ctrl.ActiveUser = $rootScope.ActiveUser;
+        ctrl.cookDel = function(){
+        	console.log(document.cookie);
+        	cookieDelFactory.cookieDel();
+        }	
 
     }
 });
@@ -110,6 +116,11 @@ app.component('login', {
         			email: ctrl.email,
         			password: ctrl.password
         		}
+        		console.log(ctrl.email);
+        		//document.cookie = "email="+ctrl.email; +" password="+ctrl.password;
+        			
+document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + (new Date(Date.now() + 7 * 86400000).toGMTString());
+
         		$location.url('/member')
         	}
         	 console.log('error', $scope.login.$error);
@@ -147,3 +158,42 @@ app.component('modalComponent', {
     };
   }
 });
+
+app.factory('cookieDelFactory', [function factory() {
+        return {
+            cookieDel: function(){
+            	console.log(document.cookie);
+				var cookie_date = new Date ( );  // Текущая дата и время
+				cookie_date.setTime ( cookie_date.getTime() - 1 );
+				document.cookie = "activeUser=; expires=" + cookie_date.toGMTString();
+				console.log(document.cookie);
+            }
+        };
+}]);
+
+/*
+при логине сохранять логин в куки
+при выходе удалять куку
+
+при создании товара дописывать email из куки
+при повторном логине проверять есть ли в массиве товаров товары с данным email
+
+разделить вывод на "все товары" и "мои товары" с возможностью редатирования
+
+crtl.loguot = function(){
+	document.cookie = "activeuser=; path=/; expires=" + date.toUTCString();
+}
+
+app.factory('factory', [function factory() {
+            
+        return {
+            cookieDel: function(){
+				document.cookie = "activeuser=; path=/; expires=" + date.toUTCString();
+				console.log(document.cookie);
+            }
+        };
+
+    }]);
+
+
+*/
