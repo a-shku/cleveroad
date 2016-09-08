@@ -29,6 +29,16 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
 	$urlRouterProvider.otherwise('/');
 }]);
 
+
+app.run(function($state, $window, $location, $rootScope) {
+	$rootScope.$on('$stateChangeStart', function(){
+		if(!$rootScope.ActiveUser){
+			$location.path('/login');
+		}
+	});
+	
+});
+
 app.component('nHeader', {
 	templateUrl: "pages/partials/header.html",
 	controller: function($rootScope, $uibModal, $log){
@@ -82,7 +92,7 @@ app.component('front', {
 	 controller: function($rootScope, $uibModal, cookieDelFactory){
         var ctrl = this;
         if($rootScope.ActiveUser){
-        	console.log('in member now');
+        	console.log('in member now', $rootScope.ActiveUser);
         } else {console.log('in front now');}
         
         console.log('activuser', $rootScope.ActiveUser);
@@ -174,6 +184,7 @@ app.factory('cookieDelFactory', [function factory() {
 /*
 при логине сохранять логин в куки
 при выходе удалять куку
+!!!лучше хранить не в куке а в сессии, а если поставить галочку "запомнить", то тогда в куках
 
 при создании товара дописывать email из куки
 при повторном логине проверять есть ли в массиве товаров товары с данным email

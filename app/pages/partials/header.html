@@ -31,7 +31,7 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="logo pull-left">
-              <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+              <a ui-sref="/"><img src="images/home/logo.png" alt="" /></a>
             </div>
             
           </div>
@@ -39,7 +39,7 @@
             <div class="shop-menu pull-right">
               <ul class="nav navbar-nav" >
               
-                <li ng-click="$ctrl.openComponentModal()"><a><i class="fa fa-user"></i> {{ActiveUser.email}}</a></li>
+                <li ng-click="$ctrl.openComponentModal()"><a><i class="fa fa-user"></i> {{ActiveUser}}</a></li>
                 <li ng-if="ActiveUser"><a href="wishlist"><i class="fa fa-star"></i> Wishlist </a></li>
                 <li ng-if="ActiveUser"><a href="cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                 <li ng-if="ActiveUser"><a ui-sref="login"><i class="fa fa-lock"></i> Logout</a></li>
