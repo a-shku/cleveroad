@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 var app = angular.module('myApp', [
   'ui.router',
+  'ngMessages'
  
 ]);
 
@@ -44,7 +45,12 @@ app.component('login', {
         	console.log($scope.login);
         	// if (ctrl.re.test(ctrl.email)){alert('val')}
         	// 	else{alert('noVal');}
+        	//if(){$location.url('/member');}
+        	 console.log('error', $scope.login.email.$error);
+        	 console.log($scope.login.email.$valid);
         };
+
+       
 
 
     }
