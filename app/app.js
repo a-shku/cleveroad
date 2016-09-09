@@ -32,9 +32,24 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
 
 app.run(function($state, $window, $location, $rootScope) {
 	$rootScope.$on('$stateChangeStart', function(){
+		console.log(document.cookie);
+
+		function get_cookie ( cookie_name ){
+		  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+		 
+		  if ( results )
+		    return ( unescape ( results[2] ) );
+		  else
+		    return null;
+		};
+		
+		$rootScope.ActiveUser = JSON.parse(get_cookie('activeUser'));
+				
 		if(!$rootScope.ActiveUser){
 			$location.path('/login');
 		}
+
+		
 	});
 	
 });
@@ -42,12 +57,10 @@ app.run(function($state, $window, $location, $rootScope) {
 app.component('nHeader', {
 	templateUrl: "pages/partials/header.html",
 	controller: function($rootScope, $scope, $state, $uibModal, $log, cookieDelFactory){
-		console.log('header is working');
-		console.log('HROOT', $rootScope.ActiveUser);
-		//$scope.ActiveUser = $rootScope.ActiveUser;
+		//console.log('header is working');
 
 	var ctrl = this;
-	//ctrl.ActiveUser = $rootScope.ActiveUser;
+
 	//get activeuser from cookies
 
 	/*mod component*/
@@ -88,7 +101,7 @@ app.component('nHeader', {
 app.component('nFooter', {
 	templateUrl: "pages/partials/footer.html",
 	controller: function($rootScope, $uibModal){
-		console.log('footer is working');
+		//console.log('footer is working');
 	}
 });
 
@@ -122,12 +135,10 @@ app.component('login', {
         	console.log(ctrl.email, ctrl.password, ctrl.remember);
         	ctrl.emailReg = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         	ctrl.passReg = /[a-zA-Z0-9]/
-        	console.log($scope.login.email.$valid);
-        	console.log($scope.login);
-        	// if (ctrl.emailReg.test(ctrl.email)){alert('val')}
-        	// 	else{alert('noVal');}
-        	//if(response from server is 'OK'){$location.url('/member');}
-        	console.log('all form', $scope.login.$valid);
+        	//console.log($scope.login.email.$valid);
+        	//console.log($scope.login);
+        	
+        	console.log('Is all form valid?', $scope.login.$valid);
         	
         	ctrl.isValid = function(){
         		if($scope.login.$valid) return true;
@@ -139,10 +150,16 @@ app.component('login', {
         			password: ctrl.password
         		}
         		console.log('create root', $rootScope.ActiveUser);
-        		console.log(ctrl.email);
-        		//document.cookie = "email="+ctrl.email; +" password="+ctrl.password;
-        			
-				document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + (new Date(Date.now() + 7 * 86400000).toGMTString());
+        		if(ctrl.remember){
+        			var date = new Date(new Date().getTime() + 3600 * 1000000);
+        			//document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + date.toGMTString();
+        		} else { 
+        			document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser);
+        		}
+        		
+
+
+				
 				
         		$location.url('/member');
         	}
@@ -198,6 +215,7 @@ app.factory('cookieDelFactory', [function factory() {
 при логине сохранять логин в куки, в имя куки подставлять email
 при выходе удалять куку
 !!!лучше хранить не в куке а в сессии, а если поставить галочку "запомнить", то тогда в куках
+Если куке не ставить время жизним, то кука будет считаться сессионной и будет жить до закрытия браузера (т.е. можно создавать куку без времени, а если поставить "запомнить", то задать время)
 
 при создании товара дописывать email из куки
 при повторном логине проверять есть ли в массиве товаров товары с данным email
