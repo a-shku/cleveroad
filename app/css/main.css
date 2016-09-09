@@ -891,7 +891,7 @@ h2.title {
 }
 
 .product-overlay {
-  background:#FE980F;
+  /*background:#FE980F;*/
   top: 0;
   display: none;
   height: 0;
@@ -909,12 +909,16 @@ h2.title {
 
 
 .product-overlay .overlay-content {
+       background: #FE980F; 
   bottom: 0;
   position: absolute;
   bottom: 0;
   text-align: center;
   width: 100%;
+  background: #FE980F;
 }
+
+
 
 .product-overlay .add-to-cart {
   background:#fff;
@@ -2519,21 +2523,5 @@ h2.title {
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
 }
-
-/*input.ng-invalid  {
-	border: 1px solid red;
-}*/
-
-.login-form form input.ng-invalid {
-  border: 1px solid red;
-}
-
-
-.btn-default.disabled, .btn-default[disabled], fieldset[disabled] .btn-default, .btn-default.disabled:hover, .btn-default[disabled]:hover, fieldset[disabled] .btn-default:hover, .btn-default.disabled:focus, .btn-default[disabled]:focus, fieldset[disabled] .btn-default:focus, .btn-default.disabled:active, .btn-default[disabled]:active, fieldset[disabled] .btn-default:active, .btn-default.disabled.active, .btn-default[disabled].active, fieldset[disabled] .btn-default.active {
-    background-color: #555;
-    border-color: #ccc;
-}
-
-
 
 

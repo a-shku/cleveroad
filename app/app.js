@@ -30,20 +30,20 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
 }]);
 
 
-app.run(function($state, $window, $location, $rootScope) {
+app.run(function($state, $window, $location, $rootScope, cookieFactory) {
 	$rootScope.$on('$stateChangeStart', function(){
 		console.log(document.cookie);
 
-		function get_cookie ( cookie_name ){
+		/*function get_cookie ( cookie_name ){
 		  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
 		 
-		  if ( results )
-		    return ( unescape ( results[2] ) );
+		  if (results)
+		    return (decodeURI(results[2]));
 		  else
 		    return null;
-		};
+		};*/
 		
-		$rootScope.ActiveUser = JSON.parse(get_cookie('activeUser'));
+		$rootScope.ActiveUser = JSON.parse(cookieFactory.cookieGet('activeUser'));
 				
 		if(!$rootScope.ActiveUser){
 			$location.path('/login');
@@ -56,7 +56,7 @@ app.run(function($state, $window, $location, $rootScope) {
 
 app.component('nHeader', {
 	templateUrl: "pages/partials/header.html",
-	controller: function($rootScope, $scope, $state, $uibModal, $log, cookieDelFactory){
+	controller: function($rootScope, $scope, $state, $uibModal, $log, cookieFactory){
 		//console.log('header is working');
 
 	var ctrl = this;
@@ -69,8 +69,7 @@ app.component('nHeader', {
       animation: true,
       component: 'modalComponent',
       resolve: {
-        items: function () {
-        	console.log('pass active', $rootScope.ActiveUser);
+        user: function () {
           return $rootScope.ActiveUser;
         }
       }
@@ -88,7 +87,7 @@ app.component('nHeader', {
   //logout
   ctrl.cookDel = function(){
         	console.log(document.cookie);
-        	cookieDelFactory.cookieDel();
+        	cookieFactory.cookieDel();
         	$rootScope.ActiveUser = false;
         	$state.go('/');
         }	
@@ -112,7 +111,7 @@ app.component('front', {
         memberView: "@",
         //adminView: "@"
     },
-	 controller: function($rootScope, $state, $location, $uibModal, cookieDelFactory){
+	 controller: function($rootScope, $state, $location, $uibModal, cookieFactory, goodsFactory){
         var ctrl = this;
         if($rootScope.ActiveUser){
         	console.log('in member now', $rootScope.ActiveUser);
@@ -120,9 +119,19 @@ app.component('front', {
         
         console.log('activuser', $rootScope.ActiveUser);
         ctrl.ActiveUser = $rootScope.ActiveUser;
-        
-
+    
     }
+});
+
+app.component('product', {
+	templateUrl: "pages/partials/product.html",
+	controller: function(goodsFactory){
+		var ctrl = this;
+
+		ctrl.products = goodsFactory;
+        console.log(ctrl.products);
+		console.log('product is working');
+	}
 });
 
 app.component('login', {
@@ -152,15 +161,11 @@ app.component('login', {
         		console.log('create root', $rootScope.ActiveUser);
         		if(ctrl.remember){
         			var date = new Date(new Date().getTime() + 3600 * 1000000);
-        			//document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + date.toGMTString();
+        			document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser) + "; expires=" + date.toGMTString();
         		} else { 
         			document.cookie = "activeUser=" + JSON.stringify($rootScope.ActiveUser);
         		}
-        		
-
-
-				
-				
+    
         		$location.url('/member');
         	}
         	 console.log('error', $scope.login.$error);
@@ -178,19 +183,31 @@ app.component('modalComponent', {
     close: '&',
     dismiss: '&'
   },
-  controller: function () {
+  controller: function ($rootScope, cookieFactory) {
     var ctrl = this;
 
     ctrl.$onInit = function () {
-      ctrl.currentUserInfo = ctrl.resolve.currentUserInfo
-      
-     
+      ctrl.currentUserInfo = ctrl.resolve.user
+      console.log(ctrl.currentUserInfo);
     };
 
     ctrl.ok = function () {
     	console.log(ctrl.userEdit);
     	ctrl.close({$value: ctrl.userEdit});
 
+
+		// function get_cookie ( cookie_name ){
+		//   var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+		 
+		//   if (results)
+		//     return (decodeURI(results[2]));
+		//   else
+		//     return null;
+		// };
+
+    	document.cookie = "activeUser=" + JSON.stringify(ctrl.userEdit);
+    	$rootScope.ActiveUser = JSON.parse(cookieFactory.cookieGet('activeUser'));
+    	console.log($rootScope.ActiveUser);
     };
 
     ctrl.cancel = function () {
@@ -199,16 +216,66 @@ app.component('modalComponent', {
   }
 });
 
-app.factory('cookieDelFactory', [function factory() {
+app.factory('cookieFactory', [function factory() {
         return {
             cookieDel: function(){
-            	console.log(document.cookie);
 				var cookie_date = new Date ( );  // Текущая дата и время
 				cookie_date.setTime ( cookie_date.getTime() - 1 );
 				document.cookie = "activeUser=; expires=" + cookie_date.toGMTString();
 				console.log(document.cookie);
-            }
+            },
+
+            cookieGet: function ( cookie_name ){
+			  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+			 
+			  if (results)
+			    return (decodeURI(results[2]));
+			  else
+			    return null;
+			}
+
         };
+}]);
+
+app.factory('goodsFactory', [function factory(){
+	return [
+		{	name: 'Prodact1',
+			price: '100',
+			image: 'gallery1.jpg',
+			description: {
+				property1: 'some prop',
+				property2: 'some other prop'
+			}
+
+		},
+		{	name: 'Prodact2',
+			price: '200',
+			image: 'gallery3.jpg',
+			description: {
+				property1: 'some prop',
+				property2: 'some other prop'
+			}
+
+		},
+		{	name: 'Prodact3',
+			price: '300',
+			image: 'girl1.jpg',
+			description: {
+				property1: 'some prop',
+				property2: 'some other prop'
+			}
+
+		},
+		{	name: 'Prodact4',
+			price: '400',
+			image: 'girl3.jpg',
+			description: {
+				property1: 'some prop',
+				property2: 'some other prop'
+			}
+
+		}
+	]
 }]);
 
 /*

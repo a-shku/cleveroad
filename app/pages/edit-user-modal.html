@@ -1,26 +1,26 @@
 <div class="modal-header">
-    <h3 class="modal-title ">Edit account</h3>
+    <h3 class="modal-title ">Edit account {{$root.ActiveUser}}</h3>
 </div>
 
 <div class="modal-body">
     <div class="form-group">
         <label for="firstName">First Name:</label>
         <input type="text" class="form-control" name="firstName" placeholder="first name"
-         ng-model="$ctrl.userEdit.meta.firstname" ng-init="$ctrl.userEdit.meta.firstname = user.meta.firstname">
+         ng-model="$ctrl.userEdit.firstname" ng-init="$ctrl.userEdit.firstname = $ctrl.currentUserInfo.firstname">
     </div>
 
     <div class="form-group">
         <label for="lastName">Last Name:</label>
-        <input type="text" class="form-control" placeholder="last name" ng-model="$ctrl.userEdit.meta.lastname" ng-init="$ctrl.userEdit.meta.lastname = user.meta.lastname">
+        <input type="text" class="form-control" placeholder="last name" ng-model="$ctrl.userEdit.lastname" ng-init="$ctrl.userEdit.lastname = $ctrl.currentUserInfo.lastname">
     </div>
 
     <div class="form-group">
         <label for="email">E-mail:</label>
-        <input type="text" class="form-control" placeholder="email" ng-model="$ctrl.userEdit.email" ng-init="$ctrl.userEdit.email = user.email">
+        <input type="text" class="form-control" placeholder="email" ng-model="$ctrl.userEdit.email" ng-init="$ctrl.userEdit.email = $ctrl.currentUserInfo.email">
     </div>
      <div class="form-group">
         <label for="phone">Phone:</label>
-        <input type="text" class="form-control" placeholder="email" ng-model="$ctrl.userEdit.phone" ng-init="$ctrl.userEdit.phone = user.phone">
+        <input type="text" class="form-control" placeholder="email" ng-model="$ctrl.userEdit.phone" ng-init="$ctrl.userEdit.phone = $ctrl.currentUserInfo.phone">
     </div>
     <div class="form-group">
         <label for="password">Current password:</label>
