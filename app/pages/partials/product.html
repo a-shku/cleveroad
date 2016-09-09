@@ -1,25 +1,58 @@
-<div class="col-sm-4" ng-repeat="product in $ctrl.products">
+<div class="col-sm-4" ng-repeat="product in ::$ctrl.products track by $index">
   <div class="product-image-wrapper">
     <div class="single-products">
         <div class="productinfo text-center">
           <img src="images/home/{{product.image}}" alt="" />
-          <h2>{{product.price  | number:2 | currency}}</h2>
           <h5>{{product.name}}</h5>
-          <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+          <h2>{{product.price  | number:2 | currency}}</h2>
+          
+          <a ng-if="$root.ActiveUser" href="#" class="btn btn-default add-to-cart" ><i class="fa fa-shopping-cart"></i>Add to cart</a>
         </div>
-        <div class="product-overlay ">
+
+        <div  class="product-overlay " ng-class="{display: $ctrl.editMode}">
+          <div class="overlay-content">
+          <h5 >{{product.name}}</h5>
+          <h5 class="left left-indent-20">Description</h5>
+          <div ng-repeat="(key, value) in product.description" class="left left-indent-20"><span class="">{{key}}:</span> {{value}}</div>
+              <h2>{{product.price | number:2 | currency}}</h2>
+            
+            <a ng-if="$root.ActiveUser" href="#" class="btn btn-default add-to-cart" ><i class="fa fa-shopping-cart"></i>Add to cart</a>
+            
+          </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div ng-if="$ctrl.editMode" class="product-overlay ">
           <div class="overlay-content">
           <h5 class="left left-indent-20">Description</h5>
           <div ng-repeat="(key, value) in product.description" class="left left-indent-20"><span class="">{{key}}:</span> {{value}}</div>
               <h2>{{product.price | number:2 | currency}}</h2>
             <h5>{{product.name}}</h5>
-            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+            <a ng-if="$root.ActiveUser" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+            
           </div>
         </div>
+        <!-- /EDIT MODE -->
+
     </div>
-    <div class="choose">
+    <div class="choose" ng-if="$root.ActiveUser">
       <ul class="nav nav-pills nav-justified">
-        <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+        <li ><a  ><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+
+        <li ><a  ><i class="fa fa-plus-square"></i>Select</a></li>
+
+        <li  ng-if="!$ctrl.editMode" ng-click="productEdit($index); $ctrl.editMode = !$ctrl.editMode">
+          <a >
+           <i class="fa fa-pencil" aria-hidden="true"></i>
+            Edit product
+          </a>
+        </li>
+        <li ng-if="$ctrl.editMode" ng-click="productEdit($index); $ctrl.editMode = !$ctrl.editMode">
+        <a >
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Save changes</a>
+        </li> 
+        
       </ul>
     </div>
   </div>

@@ -92,8 +92,6 @@ app.component('nHeader', {
         	$state.go('/');
         }	
     // /logout
-
-
 	}
 });
 
@@ -107,9 +105,7 @@ app.component('nFooter', {
 app.component('front', {
 	templateUrl: "pages/front.html",
 	bindings: {
-        //typeNavbar: "@",
         memberView: "@",
-        //adminView: "@"
     },
 	 controller: function($rootScope, $state, $location, $uibModal, cookieFactory, goodsFactory){
         var ctrl = this;
@@ -129,6 +125,9 @@ app.component('product', {
 		var ctrl = this;
 
 		ctrl.products = goodsFactory;
+
+		//ctrl.editMode = false;
+
         console.log(ctrl.products);
 		console.log('product is working');
 	}
