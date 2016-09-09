@@ -907,10 +907,10 @@ h2.title {
   height:100%;
 }
 
-/*.single-products:hover .product-overlay {
+.single-products:hover .product-overlay {
   display:block;
   height:100%;
-}*/
+}
 
 
 .product-overlay .overlay-content {
