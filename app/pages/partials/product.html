@@ -1,4 +1,4 @@
-<div class="col-sm-4" ng-repeat="product in ::$ctrl.products track by $index">
+<div class="col-sm-4" ng-repeat="product in ::$ctrl.products track by $index" ng-click="$event.stopPropagation();">
   <div class="product-image-wrapper">
     <div class="single-products">
         <div class="productinfo text-center">
@@ -9,7 +9,7 @@
           <a ng-if="$root.ActiveUser" href="#" class="btn btn-default add-to-cart" ><i class="fa fa-shopping-cart"></i>Add to cart</a>
         </div>
 
-        <div  class="product-overlay " ng-class="{display: $ctrl.editMode}">
+        <div   class="product-overlay " ng-class="{display: $ctrl.editMode}">
           <div class="overlay-content">
           <h5 >{{product.name}}</h5>
           <h5 class="left left-indent-20">Description</h5>
@@ -41,13 +41,13 @@
 
         <li ><a  ><i class="fa fa-plus-square"></i>Select</a></li>
 
-        <li  ng-if="!$ctrl.editMode" ng-click="productEdit($index); $ctrl.editMode = !$ctrl.editMode">
+        <li  ng-if="!$ctrl.editMode[$index]" ng-click="productEdit($index); $ctrl.editMode[$index] = !$ctrl.editMode[$index]">
           <a >
            <i class="fa fa-pencil" aria-hidden="true"></i>
             Edit product
           </a>
         </li>
-        <li ng-if="$ctrl.editMode" ng-click="productEdit($index); $ctrl.editMode = !$ctrl.editMode">
+        <li ng-if="$ctrl.editMode[$index]" ng-click="$ctrl.editMode[$index] = !$ctrl.editMode[$index]">
         <a >
           <i class="fa fa-check" aria-hidden="true"></i>
           Save changes</a>
