@@ -891,9 +891,9 @@ h2.title {
 }
 
 .product-overlay {
-  /*background:#FE980F;*/
+  background:#FE980F;
   top: 0;
-  /*display: none;*/
+  display: none;
   height: 0;
   position: absolute;
   transition: height 500ms ease 0s;
@@ -907,7 +907,12 @@ h2.title {
   height:100%;
 }
 
-.single-products:hover .product-overlay {
+/*.single-products:hover .product-overlay {
+  display:block;
+  height:100%;
+}*/
+
+.overlay:hover .product-overlay {
   display:block;
   height:100%;
 }

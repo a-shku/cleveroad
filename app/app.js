@@ -48,8 +48,7 @@ app.run(function($state, $window, $location, $rootScope, cookieFactory) {
 		if(!$rootScope.ActiveUser){
 			$location.path('/login');
 		}
-
-		
+	
 	});
 	
 });
@@ -60,8 +59,6 @@ app.component('nHeader', {
 		//console.log('header is working');
 
 	var ctrl = this;
-
-	//get activeuser from cookies
 
 	/*mod component*/
 	ctrl.openComponentModal = function () {
@@ -79,7 +76,7 @@ app.component('nHeader', {
       ctrl.selected = selectedItem;
       console.log(ctrl.selected);
     }, function () {
-      $log.info('modal-component dismissed at: ' + new Date());
+      //$log.info('modal-component dismissed at: ' + new Date());
     });
   };
   /*/mod component*/
@@ -225,13 +222,13 @@ app.factory('cookieFactory', [function factory() {
             },
 
             cookieGet: function ( cookie_name ){
-			  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
-			 
-			  if (results)
-			    return (decodeURI(results[2]));
-			  else
-			    return null;
-			}
+      			  var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
+      			 
+      			  if (results)
+      			    return (decodeURI(results[2]));
+      			  else
+      			    return null;
+      			}
 
         };
 }]);

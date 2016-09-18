@@ -1,6 +1,6 @@
 <div class="col-sm-4" ng-repeat="product in ::$ctrl.products track by $index" ng-click="$event.stopPropagation();">
   <div class="product-image-wrapper">
-    <div class="single-products">
+    <div class="single-products " ng-class="{overlay: !$ctrl.editMode[$index]}">
         <div class="productinfo text-center">
           <img src="images/home/{{product.image}}" alt="" />
           <h5>{{product.name}}</h5>
@@ -9,7 +9,7 @@
           <a ng-if="$root.ActiveUser" href="#" class="btn btn-default add-to-cart" ><i class="fa fa-shopping-cart"></i>Add to cart</a>
         </div>
 
-        <div   class="product-overlay " ng-class="{display: $ctrl.editMode[$index]}">
+        <div   class="product-overlay " ng-class="{display: $ctrl.editMode[$index]}"><!---->
           <div class="overlay-content">
           <h5 >{{product.name}}</h5>
           <h5 class="left left-indent-20">Description</h5>
@@ -53,7 +53,7 @@
           Save changes</a>
         </li> 
         
-andrey@appstone.co.il
+
       </ul>
     </div>
   </div>
