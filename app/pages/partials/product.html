@@ -47,13 +47,13 @@
 
         <li ><a  ><i class="fa fa-plus-square"></i>Select</a></li>
 
-        <li  ng-if="!$ctrl.editMode[$index]" ng-click="productEdit($index); $ctrl.editMode[$index] = !$ctrl.editMode[$index]">
+        <li  ng-if="!$ctrl.editMode[$index]" ng-click="$ctrl.productEdit(product, $index); $ctrl.editMode[$index] = !$ctrl.editMode[$index]"><!--$ctrl.editMode[$index] = !$ctrl.editMode[$index]-->
           <a >
            <i class="fa fa-pencil" aria-hidden="true"></i>
             Edit product
           </a>
         </li>
-        <li ng-if="$ctrl.editMode[$index]" ng-click="$ctrl.editMode[$index] = !$ctrl.editMode[$index]">
+        <li ng-if="$ctrl.editMode[$index]" ng-click="$ctrl.productEdit(product, $index); $ctrl.editMode[$index] = !$ctrl.editMode[$index]"><!--$ctrl.editMode[$index] = !$ctrl.editMode[$index]-->
         <a >
           <i class="fa fa-check" aria-hidden="true"></i>
           Save changes</a>

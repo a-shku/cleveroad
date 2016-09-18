@@ -125,6 +125,19 @@ app.component('product', {
 
 		//ctrl.editMode = false;
 
+    ctrl.productEdit = function(product, $index){
+      product.mod = !product.mod;
+      console.log(product);
+      // console.log(ctrl.editMode);
+      // for(var key in ctrl.editMode){
+      //   console.log(key, ctrl.editMode[key]);
+      // }
+      //console.log(ctrl.editMode[0]);
+      
+      //ctrl.editMode = false;
+      //ctrl.editMode[$index] = !ctrl.editMode[$index];
+    };
+
         console.log(ctrl.products);
 		console.log('product is working');
 	}
