@@ -938,6 +938,7 @@ h2.title {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   margin-bottom: 25px;
+      margin-top: 25px;
 }
 
 .product-overlay .add-to-cart:hover {

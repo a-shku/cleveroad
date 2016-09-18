@@ -238,37 +238,25 @@ app.factory('goodsFactory', [function factory(){
 		{	name: 'Prodact1',
 			price: '100',
 			image: 'gallery1.jpg',
-			description: {
-				property1: 'some prop',
-				property2: 'some other prop'
-			}
+			description: 'some description\'s text к п3 6aerg56 reg ager agreg aerg areg areg arg arga '
 
 		},
 		{	name: 'Prodact2',
 			price: '200',
 			image: 'gallery3.jpg',
-			description: {
-				property1: 'some prop',
-				property2: 'some other prop'
-			}
+			description: 'some description\'s text'
 
 		},
 		{	name: 'Prodact3',
 			price: '300',
 			image: 'girl1.jpg',
-			description: {
-				property1: 'some prop',
-				property2: 'some other prop'
-			}
+			description: 'some description\'s text'
 
 		},
 		{	name: 'Prodact4',
 			price: '400',
 			image: 'girl3.jpg',
-			description: {
-				property1: 'some prop',
-				property2: 'some other prop'
-			}
+			description: 'some description\'s text'
 
 		}
 	]
